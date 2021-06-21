@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script anguage="JavaScript" type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function sendRequest(){
+
+                var comparison1to2 = 0;
+                var comparison1to3 = 0;
+                var comparison2to3 = 0;
+
+                var radiosCrit1to2 = document.getElementsByName("crit1to2");
+                var radiosCrit1to3 = document.getElementsByName("crit1to3");
+                var radiosCrit2to3 = document.getElementsByName("crit2to3");
+
+                for(var i = 0; i < 9; i++){
+                    if(radiosCrit1to2[i].checked){                        
+                        comparison1to2 = radiosCrit1to2[i].value;
+                    }
+                    if(radiosCrit1to3[i].checked){                        
+                        comparison1to3 = radiosCrit1to3[i].value;
+                    }
+                    if(radiosCrit2to3[i].checked){                        
+                        comparison2to3 = radiosCrit2to3[i].value;
+                    }
+                }
+                
+                var json = {
+                    "comparison1to2" :comparison1to2,
+                    "comparison1to3" :comparison1to3,
+                    "comparison2to3" :comparison2to3
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.3.7:5000/ahp",
+                    data: JSON.stringify(json),
+                    contentType: "application/json",
+                        success: function (result) {
+                        console.log(result);
+						var msg = 
+							"<p>CI: 	" + result.ci 		+ "</p>" +
+							"<p>CR: 	" + result.cr 		+ "</p>" +
+							"<p>Eigen: 	" + result.eigen 	+ "</p>" +
+							"<p>Eigens: " + result.eigens 	+ "</p>"
+                        //document.getElementById("response").innerHTML = JSON.stringify(result);
+						document.getElementById("response").innerHTML = msg;
+                    },
+                    error: function (result, status) {
+                        console.log(result);
+                    }
+                });
+
+            }
+        </script>
+    </head>
+    <body>
+        <table border="1px" style="margin: 20px;">
+            <thead>
+                <tr>
+					<th>Comparisons</th>
+                    <th>Equal</th>
+                    <th>Choose the priority among the criteria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+					<td>Crit1-2</td>
+					<td>
+                	    <input type="radio" name="crit1to2" value="1" checked=true><label>1</label>
+					</td>
+					<td>
+						<input type="radio" name="crit1to2" value="2"><label>2</label>
+						<input type="radio" name="crit1to2" value="3"><label>3</label>
+						<input type="radio" name="crit1to2" value="4"><label>4</label>
+						<input type="radio" name="crit1to2" value="5"><label>5</label>
+						<input type="radio" name="crit1to2" value="6"><label>6</label>
+						<input type="radio" name="crit1to2" value="7"><label>7</label>
+						<input type="radio" name="crit1to2" value="8"><label>8</label>
+						<input type="radio" name="crit1to2" value="9"><label>9</label>
+					</td>
+				</tr>				
+				<tr>
+					<td>Crit1-3</td>
+					<td>
+                	    <input type="radio" name="crit1to3" value="1" checked=true><label>1</label>
+					</td>
+					<td>
+						<input type="radio" name="crit1to3" value="2"><label>2</label>
+						<input type="radio" name="crit1to3" value="3"><label>3</label>
+						<input type="radio" name="crit1to3" value="4"><label>4</label>
+						<input type="radio" name="crit1to3" value="5"><label>5</label>
+						<input type="radio" name="crit1to3" value="6"><label>6</label>
+						<input type="radio" name="crit1to3" value="7"><label>7</label>
+						<input type="radio" name="crit1to3" value="8"><label>8</label>
+						<input type="radio" name="crit1to3" value="9"><label>9</label>
+					</td>
+				</tr>                
+                <tr>
+					<td>Crit2-3</td>
+					<td>
+                    	<input type="radio" name="crit2to3" value="1" checked=true><label>1</label>
+					</td>
+					<td>
+						<input type="radio" name="crit2to3" value="2"><label>2</label>
+						<input type="radio" name="crit2to3" value="3"><label>3</label>
+						<input type="radio" name="crit2to3" value="4"><label>4</label>
+						<input type="radio" name="crit2to3" value="5"><label>5</label>
+						<input type="radio" name="crit2to3" value="6"><label>6</label>
+						<input type="radio" name="crit2to3" value="7"><label>7</label>
+						<input type="radio" name="crit2to3" value="8"><label>8</label>
+                	    <input type="radio" name="crit2to3" value="9"><label>9</label>
+					</td>
+				</tr>             
+            </tbody>
+        </table>
+		<input id="sbm1" type="submit" value="Calculate" name="pc_submit" onclick="sendRequest()">
+        <div id="response">
+        </div>
+    </body>
+</html>
