@@ -2,13 +2,10 @@ import os
 import numpy as np
 from xml.etree import ElementTree as et
 from flask import Flask, render_template
-from flask_cors import CORS
 from flask import jsonify
 from flask import request
 
 app = Flask(__name__, template_folder='.')
-
-CORS(app)
 
 @app.route('/', methods=['GET'])
 def index():
