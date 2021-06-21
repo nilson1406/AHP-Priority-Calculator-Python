@@ -34,7 +34,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "https://ahp-priority-calculator.herokuapp.com/ahp",
+                    url: "http://127.0.0.1:5000/ahp",
                     data: JSON.stringify(json),
                     contentType: "application/json",
                         success: function (result) {
